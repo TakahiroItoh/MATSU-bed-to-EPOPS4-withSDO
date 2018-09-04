@@ -39,9 +39,11 @@ void sendOPMode(int nodeID){
 }
 
 //プロトタイプ宣言
+//Control Word
 void sendCtrlSD(int);       //Shutdown
 void sendCtrlEN(int);       //Switch on & Enable
 void sendCtrlQS(int);       //Quick Stop
+//Velocity Setting
 void sendTgtVel(int,int);   //Target Velocity
 
 int main(){
