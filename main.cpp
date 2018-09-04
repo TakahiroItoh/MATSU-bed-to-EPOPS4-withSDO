@@ -2,6 +2,7 @@
 //for MATSU-bed to EPOS4 with "SDO" communication
 //operating mode : "Profile Velocity Mode"
 //CANで速度指令モードを選択して指定の回転数で回すプログラム
+//Created by Takahiro Itoh
 //-------------------------------------------------------
 #include "mbed.h"
 #include "USBSerial.h"
