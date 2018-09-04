@@ -24,7 +24,7 @@ BusOut myled(LED1, LED2, LED3, LED4);
 void sendOPMode(int nodeID){
     canmsgTx.id = 0x600+nodeID;
     canmsgTx.len = 8;       //Data Length
-    canmsgTx.data[0] = 0x23;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
+    canmsgTx.data[0] = 0x2F;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0x60;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByate
     canmsgTx.data[3] = 0x00;//sub-Index
@@ -80,7 +80,7 @@ int main(){
 void sendCtrlSD(int nodeID){
     canmsgTx.id = 0x600+nodeID;
     canmsgTx.len = 8;       //Data Length
-    canmsgTx.data[0] = 0x23;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
+    canmsgTx.data[0] = 0x2B;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0x40;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByate
     canmsgTx.data[3] = 0x00;//sub-Index
@@ -96,7 +96,7 @@ void sendCtrlSD(int nodeID){
 void sendCtrlEN(int nodeID){
     canmsgTx.id = 0x600+nodeID;
     canmsgTx.len = 8;       //Data Length
-    canmsgTx.data[0] = 0x23;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
+    canmsgTx.data[0] = 0x2B;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0x40;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByate
     canmsgTx.data[3] = 0x00;//sub-Index
@@ -112,7 +112,7 @@ void sendCtrlEN(int nodeID){
 void sendCtrlQS(int nodeID){
     canmsgTx.id = 0x600+nodeID;
     canmsgTx.len = 8;       //Data Length
-    canmsgTx.data[0] = 0x23;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
+    canmsgTx.data[0] = 0x2B;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0x40;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByate
     canmsgTx.data[3] = 0x00;//sub-Index
@@ -127,7 +127,7 @@ void sendCtrlQS(int nodeID){
 //0x2F-60FF-00-03E8-0000
 void sendTgtVel(int nodeID,int rpm){
     canmsgTx.id = 0x600+nodeID;
-    canmsgTx.len = 6;       //Data Length
+    canmsgTx.len = 8;       //Data Length
     canmsgTx.data[0] = 0x2B;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0xFF;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByate
