@@ -20,20 +20,18 @@ BusOut myled(LED1, LED2, LED3, LED4);
 
 //send関数の例
 //Operating Mode
-//0x2F-6060-00-03-//-//-//
+//0x2F-6060-00-03-000000
 void sendOPMode(int nodeID){
     canmsgTx.id = 0x600+nodeID;
-    canmsgTx.len = 5;       //Data Length
-    canmsgTx.data[0] = 0x2F;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
+    canmsgTx.len = 8;       //Data Length
+    canmsgTx.data[0] = 0x23;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0x60;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByate
     canmsgTx.data[3] = 0x00;//sub-Index
     canmsgTx.data[4] = 0x03;//data:0x03 = "Profile Velocity Mode" 
-    /*
     canmsgTx.data[5] = 0x00;//data:(user value)
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
-    */
     canPort.write(canmsgTx);
     pc.printf("ok\r\n");
 }
