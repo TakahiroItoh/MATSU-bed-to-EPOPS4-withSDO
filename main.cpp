@@ -35,7 +35,14 @@ void sendOPMode(int nodeID){
     canmsgTx.data[7] = 0x00;//data:(user value)
     */
     canPort.write(canmsgTx);
-    pc.printf("ok\r\n");
+
+    //送信データの表示
+    //0x canID|Byte0|Byte1|Byte2|Byte3|Byte4|Byte5|Byte6|Byte7|
+    pc.printf("0x%x",canmsgTx.id);
+    for(char i=0;i < canmsgTx.len;i++){
+      pc.printf("|%x|",canmsgTx.data[i]);
+    }
+    pc.printf("\r\n");
 }
 
 //プロトタイプ宣言
