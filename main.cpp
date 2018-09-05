@@ -93,7 +93,7 @@ int main(){
 }
 
 //0x2B-6040-00-0000-//-//
-void sendCtrlSD(int nodeID){
+void sendCtrlRS(int nodeID){
     canmsgTx.id = 0x600+nodeID;
     canmsgTx.len = 6;       //Data Length
     canmsgTx.data[0] = 0x2B;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
