@@ -28,7 +28,7 @@ void sendOPMode(int nodeID){
     canmsgTx.data[1] = 0x60;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByate
     canmsgTx.data[3] = 0x00;//sub-Index
-    canmsgTx.data[4] = 0x03;//data:0x03 = "Profile Velocity Mode" 
+    canmsgTx.data[4] = 0x03;//data:0x03 = "Profile Velocity Mode"
     /*
     canmsgTx.data[5] = 0x00;//data:(user value)
     canmsgTx.data[6] = 0x00;//data:(user value)
@@ -40,6 +40,7 @@ void sendOPMode(int nodeID){
 
 //プロトタイプ宣言
 //Control Word
+void sendCtrlRS(int);       //Reset
 void sendCtrlSD(int);       //Shutdown
 void sendCtrlEN(int);       //Switch on & Enable
 void sendCtrlQS(int);       //Quick Stop
@@ -56,6 +57,10 @@ int main(){
     pc.printf("Send Operating Mode\r\n");
     sendOPMode(node1);
     myled = 0b0011;
+    wait(0.5);
+    //コントロールワードディクショナリのリセット
+    pc.printf("Send Reset Command\r\n");
+    sendCtrlRS(node1);
     wait(0.5);
     //Shutdown,Enableコマンド送信｜リセット
     pc.printf("Send Shutdown Command\r\n");
@@ -80,7 +85,7 @@ int main(){
     myled = 0b0000;
 }
 
-//0x2F-6040-00-0006-//-//
+//0x2B-6040-00-0000-//-//
 void sendCtrlSD(int nodeID){
     canmsgTx.id = 0x600+nodeID;
     canmsgTx.len = 6;       //Data Length
@@ -88,7 +93,25 @@ void sendCtrlSD(int nodeID){
     canmsgTx.data[1] = 0x40;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByate
     canmsgTx.data[3] = 0x00;//sub-Index
-    canmsgTx.data[4] = 0x06;//data:0x00"06" = "Controlword(Shutdown)" 
+    canmsgTx.data[4] = 0x00;//data:0x00"00" = "Controlword(Shutdown)"
+    canmsgTx.data[5] = 0x00;//data:0x"00"00
+    /*
+    canmsgTx.data[6] = 0x00;//data:(user value)
+    canmsgTx.data[7] = 0x00;//data:(user value)
+    */
+    canPort.write(canmsgTx);
+    pc.printf("ok\r\n");
+}
+
+//0x2B-6040-00-0006-//-//
+void sendCtrlSD(int nodeID){
+    canmsgTx.id = 0x600+nodeID;
+    canmsgTx.len = 6;       //Data Length
+    canmsgTx.data[0] = 0x2B;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
+    canmsgTx.data[1] = 0x40;//Index LowByte
+    canmsgTx.data[2] = 0x60;//Index HighByate
+    canmsgTx.data[3] = 0x00;//sub-Index
+    canmsgTx.data[4] = 0x06;//data:0x00"06" = "Controlword(Shutdown)"
     canmsgTx.data[5] = 0x00;//data:0x"00"06
     /*
     canmsgTx.data[6] = 0x00;//data:(user value)
@@ -98,7 +121,7 @@ void sendCtrlSD(int nodeID){
     pc.printf("ok\r\n");
 }
 
-//0x2F-6040-00-000F-//-//
+//0x2B-6040-00-000F-//-//
 void sendCtrlEN(int nodeID){
     canmsgTx.id = 0x600+nodeID;
     canmsgTx.len = 6;       //Data Length
@@ -106,7 +129,7 @@ void sendCtrlEN(int nodeID){
     canmsgTx.data[1] = 0x40;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByate
     canmsgTx.data[3] = 0x00;//sub-Index
-    canmsgTx.data[4] = 0x0F;//data:0x00"0F" = "Controlword(Enable)" 
+    canmsgTx.data[4] = 0x0F;//data:0x00"0F" = "Controlword(Enable)"
     canmsgTx.data[5] = 0x00;//data:0x"00"0F
     /*
     canmsgTx.data[6] = 0x00;//data:(user value)
@@ -116,7 +139,7 @@ void sendCtrlEN(int nodeID){
     pc.printf("ok\r\n");
 }
 
-//0x2F-6040-00-000B-//-//
+//0x2B-6040-00-000B-//-//
 void sendCtrlQS(int nodeID){
     canmsgTx.id = 0x600+nodeID;
     canmsgTx.len = 6;       //Data Length
@@ -124,7 +147,7 @@ void sendCtrlQS(int nodeID){
     canmsgTx.data[1] = 0x40;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByate
     canmsgTx.data[3] = 0x00;//sub-Index
-    canmsgTx.data[4] = 0x0B;//data:0x00"0B" = "Quick Stop" 
+    canmsgTx.data[4] = 0x0B;//data:0x00"0B" = "Quick Stop"
     canmsgTx.data[5] = 0x00;//data:0x"00"0B
     /*
     canmsgTx.data[6] = 0x00;//data:(user value)
@@ -134,7 +157,7 @@ void sendCtrlQS(int nodeID){
     pc.printf("ok\r\n");
 }
 
-//0x2F-60FF-00-03E8-//-//
+//0x2B-60FF-00-03E8-//-//
 void sendTgtVel(int nodeID,int rpm){
     canmsgTx.id = 0x600+nodeID;
     canmsgTx.len = 6;       //Data Length
@@ -142,7 +165,7 @@ void sendTgtVel(int nodeID,int rpm){
     canmsgTx.data[1] = 0xFF;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByate
     canmsgTx.data[3] = 0x00;//sub-Index
-    canmsgTx.data[4] = 0xE8;//data:0x03E8 = "Target Velocity Value" 
+    canmsgTx.data[4] = 0xE8;//data:0x03E8 = "Target Velocity Value"
     canmsgTx.data[5] = 0x03;//data:
     /*
     canmsgTx.data[6] = 0x00;//data:(user value)
