@@ -26,7 +26,7 @@ void sendOPMode(int nodeID){
     canmsgTx.len = 5;       //Data Length
     canmsgTx.data[0] = 0x2F;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0x60;//Index LowByte
-    canmsgTx.data[2] = 0x60;//Index HighByate
+    canmsgTx.data[2] = 0x60;//Index HighByte
     canmsgTx.data[3] = 0x00;//sub-Index
     canmsgTx.data[4] = 0x03;//data:0x03 = "Profile Velocity Mode"
     /*
@@ -91,7 +91,7 @@ void sendCtrlSD(int nodeID){
     canmsgTx.len = 6;       //Data Length
     canmsgTx.data[0] = 0x2B;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0x40;//Index LowByte
-    canmsgTx.data[2] = 0x60;//Index HighByate
+    canmsgTx.data[2] = 0x60;//Index HighByte
     canmsgTx.data[3] = 0x00;//sub-Index
     canmsgTx.data[4] = 0x00;//data:0x00"00" = "Controlword(Shutdown)"
     canmsgTx.data[5] = 0x00;//data:0x"00"00
@@ -109,7 +109,7 @@ void sendCtrlSD(int nodeID){
     canmsgTx.len = 6;       //Data Length
     canmsgTx.data[0] = 0x2B;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0x40;//Index LowByte
-    canmsgTx.data[2] = 0x60;//Index HighByate
+    canmsgTx.data[2] = 0x60;//Index HighByte
     canmsgTx.data[3] = 0x00;//sub-Index
     canmsgTx.data[4] = 0x06;//data:0x00"06" = "Controlword(Shutdown)"
     canmsgTx.data[5] = 0x00;//data:0x"00"06
@@ -127,7 +127,7 @@ void sendCtrlEN(int nodeID){
     canmsgTx.len = 6;       //Data Length
     canmsgTx.data[0] = 0x2B;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0x40;//Index LowByte
-    canmsgTx.data[2] = 0x60;//Index HighByate
+    canmsgTx.data[2] = 0x60;//Index HighByte
     canmsgTx.data[3] = 0x00;//sub-Index
     canmsgTx.data[4] = 0x0F;//data:0x00"0F" = "Controlword(Enable)"
     canmsgTx.data[5] = 0x00;//data:0x"00"0F
@@ -145,7 +145,7 @@ void sendCtrlQS(int nodeID){
     canmsgTx.len = 6;       //Data Length
     canmsgTx.data[0] = 0x2B;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0x40;//Index LowByte
-    canmsgTx.data[2] = 0x60;//Index HighByate
+    canmsgTx.data[2] = 0x60;//Index HighByte
     canmsgTx.data[3] = 0x00;//sub-Index
     canmsgTx.data[4] = 0x0B;//data:0x00"0B" = "Quick Stop"
     canmsgTx.data[5] = 0x00;//data:0x"00"0B
@@ -163,7 +163,7 @@ void sendTgtVel(int nodeID,int rpm){
     canmsgTx.len = 6;       //Data Length
     canmsgTx.data[0] = 0x2B;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0xFF;//Index LowByte
-    canmsgTx.data[2] = 0x60;//Index HighByate
+    canmsgTx.data[2] = 0x60;//Index HighByte
     canmsgTx.data[3] = 0x00;//sub-Index
     canmsgTx.data[4] = 0xE8;//data:0x03E8 = "Target Velocity Value"
     canmsgTx.data[5] = 0x03;//data:
