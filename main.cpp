@@ -38,9 +38,9 @@ void sendOPMode(int nodeID){
 
     //送信データの表示
     //0x canID|Byte0|Byte1|Byte2|Byte3|Byte4|Byte5|Byte6|Byte7|
-    pc.printf("0x%3x",canmsgTx.id);
+    pc.printf("0x%3x|",canmsgTx.id);
     for(char i=0;i < canmsgTx.len;i++){
-      pc.printf("|%2x|",canmsgTx.data[i]);
+      pc.printf("%02x|",canmsgTx.data[i]);
     }
     pc.printf("\r\n");
 }
