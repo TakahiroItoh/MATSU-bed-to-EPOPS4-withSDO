@@ -4,6 +4,12 @@
 //CANで速度指令モードを選択して指定の回転数で回すプログラム
 //Created by Takahiro Itoh
 //-------------------------------------------------------
+/*
+
+
+*/
+
+
 #include "mbed.h"
 #include "USBSerial.h"
 
@@ -37,15 +43,11 @@ void sendOPMode(int nodeID){
     canPort.write(canmsgTx);
 
     //送信データの表示
-    //0x canID|Byte0|Byte1|Byte2|Byte3|Byte4|Byte5|Byte6|Byte7|
-    pc.printf("0x%3x|",canmsgTx.id);
-    for(char i=0;i < canmsgTx.len;i++){
-      pc.printf("%02x|",canmsgTx.data[i]);
-    }
-    pc.printf("\r\n");
+    printCANmsg();
 }
 
 //プロトタイプ宣言
+//-----------send関数------------
 //Control Word
 void sendCtrlRS(int);       //Reset
 void sendCtrlSD(int);       //Shutdown
@@ -53,6 +55,8 @@ void sendCtrlEN(int);       //Switch on & Enable
 void sendCtrlQS(int);       //Quick Stop
 //Velocity Setting
 void sendTgtVel(int,int);   //Target Velocity
+//-------------------------------
+void printCANmsg(void);     //CANメッセージをPCに表示
 
 int main(){
     int node1 = 1;
@@ -108,13 +112,7 @@ void sendCtrlRS(int nodeID){
     */
     canPort.write(canmsgTx);
     //送信データの表示
-    //0x canID|Byte0|Byte1|Byte2|Byte3|Byte4|Byte5|Byte6|Byte7|
-    pc.printf("0x%3x|",canmsgTx.id);
-    for(char i=0;i < canmsgTx.len;i++){
-      pc.printf("%02x|",canmsgTx.data[i]);
-    }
-    pc.printf("\r\n");
-}
+    printCANmsg();
 
 //0x2B-6040-00-0006-//-//
 void sendCtrlSD(int nodeID){
@@ -132,12 +130,7 @@ void sendCtrlSD(int nodeID){
     */
     canPort.write(canmsgTx);
     //送信データの表示
-    //0x canID|Byte0|Byte1|Byte2|Byte3|Byte4|Byte5|Byte6|Byte7|
-    pc.printf("0x%3x|",canmsgTx.id);
-    for(char i=0;i < canmsgTx.len;i++){
-      pc.printf("%02x|",canmsgTx.data[i]);
-    }
-    pc.printf("\r\n");
+    printCANmsg();
 }
 
 //0x2B-6040-00-000F-//-//
@@ -156,12 +149,7 @@ void sendCtrlEN(int nodeID){
     */
     canPort.write(canmsgTx);
     //送信データの表示
-    //0x canID|Byte0|Byte1|Byte2|Byte3|Byte4|Byte5|Byte6|Byte7|
-    pc.printf("0x%3x|",canmsgTx.id);
-    for(char i=0;i < canmsgTx.len;i++){
-      pc.printf("%02x|",canmsgTx.data[i]);
-    }
-    pc.printf("\r\n");
+    printCANmsg();
 }
 
 //0x2B-6040-00-000B-//-//
@@ -180,12 +168,7 @@ void sendCtrlQS(int nodeID){
     */
     canPort.write(canmsgTx);
     //送信データの表示
-    //0x canID|Byte0|Byte1|Byte2|Byte3|Byte4|Byte5|Byte6|Byte7|
-    pc.printf("0x%3x|",canmsgTx.id);
-    for(char i=0;i < canmsgTx.len;i++){
-      pc.printf("%02x|",canmsgTx.data[i]);
-    }
-    pc.printf("\r\n");
+    printCANmsg();
 }
 
 //0x2B-60FF-00-03E8-//-//
@@ -204,10 +187,15 @@ void sendTgtVel(int nodeID,int rpm){
     */
     canPort.write(canmsgTx);
     //送信データの表示
-    //0x canID|Byte0|Byte1|Byte2|Byte3|Byte4|Byte5|Byte6|Byte7|
-    pc.printf("0x%3x|",canmsgTx.id);
-    for(char i=0;i < canmsgTx.len;i++){
-      pc.printf("%02x|",canmsgTx.data[i]);
-    }
-    pc.printf("\r\n");
+    printCANmsg();
+}
+
+//送信データの表示
+void printCANmsg(void){
+  //0x canID|Byte0|Byte1|Byte2|Byte3|Byte4|Byte5|Byte6|Byte7|
+  pc.printf("0x%3x|",canmsgTx.id);
+  for(char i=0;i < canmsgTx.len;i++){
+    pc.printf("%02x|",canmsgTx.data[i]);
+  }
+  pc.printf("\r\n");
 }
