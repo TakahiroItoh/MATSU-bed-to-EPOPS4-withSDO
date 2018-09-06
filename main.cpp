@@ -5,11 +5,25 @@
 //Created by Takahiro Itoh
 //-------------------------------------------------------
 /*
-
-
+//CANで送っているsend関数の例
+//Operating Modeの設定
+void sendOPMode(int nodeID){
+    canmsgTx.id = 0x600+nodeID;
+    canmsgTx.len = 5;       //Data Length
+    canmsgTx.data[0] = 0x2F;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
+    canmsgTx.data[1] = 0x60;//Index LowByte
+    canmsgTx.data[2] = 0x60;//Index HighByte
+    canmsgTx.data[3] = 0x00;//sub-Index
+    canmsgTx.data[4] = 0x03;//data:0x03 = "Profile Velocity Mode"
+//-------------------------------------------------------
+    canmsgTx.data[5] = 0x00;//data:(user value)
+    canmsgTx.data[6] = 0x00;//data:(user value)
+    canmsgTx.data[7] = 0x00;//data:(user value)
+//-------------------------------------------------------
+    canPort.write(canmsgTx);//CANでデータ送信
+    printCANmsg();          //CAN送信データをPCに表示
+}
 */
-
-
 #include "mbed.h"
 #include "USBSerial.h"
 
@@ -24,30 +38,10 @@ CAN canPort(P0_13, P0_18);//CAN name(PinName rd, PinName td)
 
 BusOut myled(LED1, LED2, LED3, LED4);
 
-//send関数の例
-//Operating Mode
-//0x2F-6060-00-03-//-//-//
-void sendOPMode(int nodeID){
-    canmsgTx.id = 0x600+nodeID;
-    canmsgTx.len = 5;       //Data Length
-    canmsgTx.data[0] = 0x2F;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
-    canmsgTx.data[1] = 0x60;//Index LowByte
-    canmsgTx.data[2] = 0x60;//Index HighByte
-    canmsgTx.data[3] = 0x00;//sub-Index
-    canmsgTx.data[4] = 0x03;//data:0x03 = "Profile Velocity Mode"
-    /*
-    canmsgTx.data[5] = 0x00;//data:(user value)
-    canmsgTx.data[6] = 0x00;//data:(user value)
-    canmsgTx.data[7] = 0x00;//data:(user value)
-    */
-    canPort.write(canmsgTx);
-
-    //送信データの表示
-    printCANmsg();
-}
-
 //プロトタイプ宣言
 //-----------send関数------------
+//mode Setting
+void sendOPMode(int);       //Operating Mode
 //Control Word
 void sendCtrlRS(int);       //Reset
 void sendCtrlSD(int);       //Shutdown
@@ -56,7 +50,7 @@ void sendCtrlQS(int);       //Quick Stop
 //Velocity Setting
 void sendTgtVel(int,int);   //Target Velocity
 //-------------------------------
-void printCANmsg(void);     //CANメッセージをPCに表示
+void printCANmsg(void);     //CAN送信データをPCに表示
 
 int main(){
     int node1 = 1;
@@ -96,6 +90,24 @@ int main(){
     myled = 0b0000;
 }
 
+//0x2F-6060-00-03-//-//-//
+void sendOPMode(int nodeID){
+    canmsgTx.id = 0x600+nodeID;
+    canmsgTx.len = 5;       //Data Length
+    canmsgTx.data[0] = 0x2F;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
+    canmsgTx.data[1] = 0x60;//Index LowByte
+    canmsgTx.data[2] = 0x60;//Index HighByte
+    canmsgTx.data[3] = 0x00;//sub-Index
+    canmsgTx.data[4] = 0x03;//data:0x03 = "Profile Velocity Mode"
+    /*
+    canmsgTx.data[5] = 0x00;//data:(user value)
+    canmsgTx.data[6] = 0x00;//data:(user value)
+    canmsgTx.data[7] = 0x00;//data:(user value)
+    */
+    canPort.write(canmsgTx);//CANでデータ送信
+    printCANmsg();          //CAN送信データをPCに表示
+}
+
 //0x2B-6040-00-0000-//-//
 void sendCtrlRS(int nodeID){
     canmsgTx.id = 0x600+nodeID;
@@ -110,9 +122,9 @@ void sendCtrlRS(int nodeID){
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
     */
-    canPort.write(canmsgTx);
-    //送信データの表示
-    printCANmsg();
+    canPort.write(canmsgTx);//CANでデータ送信
+    printCANmsg();          //CAN送信データをPCに表示
+}
 
 //0x2B-6040-00-0006-//-//
 void sendCtrlSD(int nodeID){
@@ -128,9 +140,8 @@ void sendCtrlSD(int nodeID){
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
     */
-    canPort.write(canmsgTx);
-    //送信データの表示
-    printCANmsg();
+    canPort.write(canmsgTx);//CANでデータ送信
+    printCANmsg();          //CAN送信データをPCに表示
 }
 
 //0x2B-6040-00-000F-//-//
@@ -147,9 +158,8 @@ void sendCtrlEN(int nodeID){
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
     */
-    canPort.write(canmsgTx);
-    //送信データの表示
-    printCANmsg();
+    canPort.write(canmsgTx);//CANでデータ送信
+    printCANmsg();          //CAN送信データをPCに表示
 }
 
 //0x2B-6040-00-000B-//-//
@@ -166,9 +176,8 @@ void sendCtrlQS(int nodeID){
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
     */
-    canPort.write(canmsgTx);
-    //送信データの表示
-    printCANmsg();
+    canPort.write(canmsgTx);//CANでデータ送信
+    printCANmsg();          //CAN送信データをPCに表示
 }
 
 //0x2B-60FF-00-03E8-//-//
@@ -185,9 +194,8 @@ void sendTgtVel(int nodeID,int rpm){
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
     */
-    canPort.write(canmsgTx);
-    //送信データの表示
-    printCANmsg();
+    canPort.write(canmsgTx);//CANでデータ送信
+    printCANmsg();          //CAN送信データをPCに表示
 }
 
 //送信データの表示
