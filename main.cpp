@@ -33,10 +33,11 @@ void sendOPMode(int nodeID){
 #define LED4 P0_26
 
 USBSerial pc;
-CANMessage canmsgTx;
-CAN canPort(P0_13, P0_18);//CAN name(PinName rd, PinName td)
-
 BusOut myled(LED1, LED2, LED3, LED4);
+
+CANMessage canmsgTx;
+CAN canPort(P0_13, P0_18);  //CAN name(PinName rd, PinName td)
+canPort.frequency(1000000); //Bit Rate:1MHz
 
 //プロトタイプ宣言
 //-----------send関数------------
@@ -57,6 +58,7 @@ int main(){
     int rpm = 1000;
     myled = 0b0001;
     while(pc.readable() == 0);
+    wait(0.5);
     pc.printf("KEY DETECTED!!\r\nPROGRAM START\r\n");
     //オペレーティングモードを送信
     pc.printf("Send Operating Mode\r\n");
