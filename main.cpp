@@ -100,8 +100,8 @@ void sendCtrlRS(int nodeID){
     canmsgTx.data[1] = 0x40;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByte
     canmsgTx.data[3] = 0x00;//sub-Index
-    canmsgTx.data[4] = 0x00;//data:0x00"00" = "Controlword(Shutdown)"
-    canmsgTx.data[5] = 0x00;//data:0x"00"00
+    canmsgTx.data[4] = 0x80;//data:0x00"80" = "Controlword(Shutdown)"
+    canmsgTx.data[5] = 0x00;//data:0x"00"80
     /*
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
