@@ -203,9 +203,9 @@ void sendTgtVel(int nodeID,int rpm){
 //送信データの表示
 void printCANmsg(void){
   //0x canID|Byte0|Byte1|Byte2|Byte3|Byte4|Byte5|Byte6|Byte7|
-  pc.printf("0x%3x|",canmsgTx.id);
-  for(char i=0;i < canmsgTx.len;i++){
-    pc.printf("%02x|",canmsgTx.data[i]);
-  }
-  pc.printf("\r\n");
+    pc.printf("0x%3x|",canmsgTx.id);
+    for(char i=0;i < canmsgTx.len;i++){
+        pc.printf("%02x|",canmsgTx.data[i]);
+    }
+    pc.printf("\r\n");
 }
