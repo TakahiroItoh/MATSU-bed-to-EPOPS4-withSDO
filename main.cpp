@@ -191,10 +191,11 @@ void sendTgtVel(int nodeID,int rpm){
     canmsgTx.data[1] = 0xFF;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByte
     canmsgTx.data[3] = 0x00;//sub-Index
-    canmsgTx.data[4] = 0xE8;//data:0x03E8 = "Target Velocity Value"
-    canmsgTx.data[5] = 0x03;//data:
-    canmsgTx.data[6] = 0x00;//data:(user value)
-    canmsgTx.data[7] = 0x00;//data:(user value)
+    //下位から1Byteずつdataに格納
+    for(char cnt=4;cnt<8;cnt++){
+      canmsgTx.data[cnt] = rpm % 256;
+      rpm = rpm / 256;
+    }
     canPort.write(canmsgTx);//CANでデータ送信
     printCANmsg();          //CAN送信データをPCに表示
 }
