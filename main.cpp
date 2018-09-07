@@ -37,7 +37,6 @@ BusOut myled(LED1, LED2, LED3, LED4);
 
 CANMessage canmsgTx;
 CAN canPort(P0_13, P0_18);  //CAN name(PinName rd, PinName td)
-canPort.frequency(1000000); //Bit Rate:1MHz
 
 //プロトタイプ宣言
 //-----------send関数------------
@@ -54,6 +53,7 @@ void sendTgtVel(int,int);   //Target Velocity
 void printCANmsg(void);     //CAN送信データをPCに表示
 
 int main(){
+    canPort.frequency(1000000); //Bit Rate:1MHz
     int node1 = 1;
     int rpm = 1000;
     myled = 0b0001;
@@ -184,9 +184,9 @@ void sendCtrlQS(int nodeID){
 
 //0x2B-60FF-00-03E8-//-//
 void sendTgtVel(int nodeID,int rpm){
-    pc.printf("回転数%drpm|0x%08x\r\n",rpm,rpm);  //回転数送信データの表示
+    pc.printf("回転数%drpm|0x%08x|\r\n",rpm,rpm);  //回転数送信データの表示
     canmsgTx.id = 0x600+nodeID;
-    canmsgTx.len = 6;       //Data Length
+    canmsgTx.len = 8;       //Data Length
     canmsgTx.data[0] = 0x23;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
     canmsgTx.data[1] = 0xFF;//Index LowByte
     canmsgTx.data[2] = 0x60;//Index HighByte
