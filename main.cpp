@@ -184,6 +184,7 @@ void sendCtrlQS(int nodeID){
 
 //0x2B-60FF-00-03E8-//-//
 void sendTgtVel(int nodeID,int rpm){
+    pc.printf("回転数%drpm|0x%08x\r\n",rpm,rpm);  //回転数送信データの表示
     canmsgTx.id = 0x600+nodeID;
     canmsgTx.len = 6;       //Data Length
     canmsgTx.data[0] = 0x23;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
