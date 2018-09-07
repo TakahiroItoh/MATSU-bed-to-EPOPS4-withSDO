@@ -54,8 +54,8 @@ void printCANmsg(void);     //CAN送信データをPCに表示
 
 int main(){
     canPort.frequency(1000000); //Bit Rate:1MHz
-    int node1 = 1;
-    int rpm = 1000;
+    int node1 = 1;  //CAN node Setting
+    int rpm = 1000; //Velocity Setting[rpm]
     myled = 0b0001;
     while(pc.readable() == 0);
     wait(0.5);
@@ -193,8 +193,8 @@ void sendTgtVel(int nodeID,int rpm){
     canmsgTx.data[3] = 0x00;//sub-Index
     //下位から1Byteずつdataに格納
     for(char cnt=4;cnt<8;cnt++){
-      canmsgTx.data[cnt] = rpm % 256;
-      rpm = rpm / 256;
+        canmsgTx.data[cnt] = rpm % 256;
+        rpm = rpm / 256;
     }
     canPort.write(canmsgTx);//CANでデータ送信
     printCANmsg();          //CAN送信データをPCに表示
