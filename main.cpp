@@ -58,37 +58,32 @@ int main(){
     int rpm = 1000; //Velocity Setting[rpm]
     myled = 0b0001;
     while(pc.readable() == 0);
-    wait(0.5);
     pc.printf("KEY DETECTED!!\r\nPROGRAM START\r\n");
+    wait(0.5);
+    //-------------起動時に必ず送信---------------
     //オペレーティングモードを送信
     pc.printf("Send Operating Mode\r\n");
     sendOPMode(node1);
     myled = 0b0011;
-    wait(0.5);
-    //コントロールワードディクショナリのリセット
+    wait(0.1);
+    //コントロールワードのリセット
     pc.printf("Send Reset Command\r\n");
     sendCtrlRS(node1);
-    wait(0.5);
+    wait(0.1);
     //Shutdown,Enableコマンド送信｜リセット
     pc.printf("Send Shutdown Command\r\n");
     sendCtrlSD(node1);
-    wait(0.5);
+    wait(0.1);
     pc.printf("Send SW on & Enable Command\r\n");
     sendCtrlEN(node1);
     myled = 0b0111;
-    wait(0.5);
+    wait(0.1);
+    //-------------------------------------------
+    //-------------やりたいことを送信--------------
     //目標速度を送信後、Enableコマンド送信
     pc.printf("Send Target Velocity\r\n");
     sendTgtVel(node1,rpm);
-    wait(0.5);
-    pc.printf("Send SW on & Enable Command\r\n");
-    sendCtrlEN(node1);
-    myled = 0b1111;
-    wait(0.5);
-    //10秒後Quick Stop
-    wait(10);
-    pc.printf("send Quick stop commmand\r\n");
-    sendCtrlQS(node1);
+    //-------------------------------------------
     myled = 0b0000;
 }
 
@@ -182,7 +177,7 @@ void sendCtrlQS(int nodeID){
     printCANmsg();          //CAN送信データをPCに表示
 }
 
-//0x2B-60FF-00-03E8-//-//
+//0x2B-60FF-00-[user data(4Byte)]
 void sendTgtVel(int nodeID,int rpm){
     pc.printf("%drpm|0x%08x\r\n",rpm,rpm);  //回転数送信データの表示
     canmsgTx.id = 0x600+nodeID;
@@ -198,6 +193,12 @@ void sendTgtVel(int nodeID,int rpm){
     }
     canPort.write(canmsgTx);//CANでデータ送信
     printCANmsg();          //CAN送信データをPCに表示
+    wait(0.1);
+    //send Enable
+    pc.printf("Send Enable Command\r\n");
+    sendCtrlEN(nodeID);
+    wait(0.1);
+    myled = 0b1111;
 }
 
 //送信データの表示
