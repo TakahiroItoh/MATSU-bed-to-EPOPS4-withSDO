@@ -81,10 +81,25 @@ int main(){
     wait(0.1);
     //-------------------------------------------
     while(1){
-        //-------------やりたいことを送信--------------
-        //目標速度を送信後、Enableコマンド送信
-        pc.printf("Send Target Velocity\r\n");
-        sendTgtVel(node1,rpm);
+        //-------------やりたいことを選択--------------
+        if(){
+            //目標速度を送信後、Enableコマンド送信
+            pc.printf("Send Target Velocity\r\n");
+            sendTgtVel(node1,rpm);
+            myled = 0b1111;
+        }
+        else if(){
+            //Haltコマンド送信
+            pc.printf("Send Halt Command\r\n");
+            sendCtrlHL(node1);
+            myled = 0b0111;
+        }
+        else if(){
+            //quick stopコマンド送信
+            pc.printf("Send Quick Stop | break\r\n");
+            sendCtrlQS(node1);
+            break;
+        }
         //-------------------------------------------
     }
     myled = 0b0000;
@@ -219,7 +234,6 @@ void sendTgtVel(int nodeID,int rpm){
     pc.printf("Send Enable Command\r\n");
     sendCtrlEN(nodeID);
     wait(0.1);
-    myled = 0b1111;
 }
 
 //送信データの表示
