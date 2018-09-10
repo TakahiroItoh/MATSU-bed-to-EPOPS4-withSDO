@@ -47,6 +47,7 @@ void sendCtrlRS(int);       //Reset
 void sendCtrlSD(int);       //Shutdown
 void sendCtrlEN(int);       //Switch on & Enable
 void sendCtrlQS(int);       //Quick Stop
+void sendCtrlHL(int);       //Halt
 //Velocity Setting
 void sendTgtVel(int,int);   //Target Velocity
 //-------------------------------
@@ -174,6 +175,24 @@ void sendCtrlQS(int nodeID){
     canmsgTx.data[3] = 0x00;//sub-Index
     canmsgTx.data[4] = 0x0B;//data:0x00"0B" = "Quick Stop"
     canmsgTx.data[5] = 0x00;//data:0x"00"0B
+    /*
+    canmsgTx.data[6] = 0x00;//data:(user value)
+    canmsgTx.data[7] = 0x00;//data:(user value)
+    */
+    canPort.write(canmsgTx);//CANでデータ送信
+    printCANmsg();          //CAN送信データをPCに表示
+}
+
+//0x2B-6040-00-010F-//-//
+void sendCtrlHL(int nodeID){
+    canmsgTx.id = 0x600+nodeID;
+    canmsgTx.len = 6;       //Data Length
+    canmsgTx.data[0] = 0x2B;//|0Byte:40|1Byte:2F|2Byte:2B|4Byte:23|other:22|
+    canmsgTx.data[1] = 0x40;//Index LowByte
+    canmsgTx.data[2] = 0x60;//Index HighByte
+    canmsgTx.data[3] = 0x00;//sub-Index
+    canmsgTx.data[4] = 0x0F;//data:0x01"0F" = "Halt"
+    canmsgTx.data[5] = 0x01;//data:0x"01"0F
     /*
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
