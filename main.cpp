@@ -253,7 +253,14 @@ void sendTgtVel(int nodeID,int rpm){
 }
 
 void readActVel(int nodeID){
-
+    //値が欲しいobjectのアドレスを送る
+    canmsgTx.id = 0x600+nodeID;
+    canmsgTx.len = 4;       //Data Length
+    canmsgTx.data[0] = 0x40;//|0Byte:40|
+    canmsgTx.data[1] = 0x;//Index LowByte
+    canmsgTx.data[2] = 0x;//Index HighByte
+    canmsgTx.data[3] = 0x00;//sub-Index
+    canPort.write(canmsgTx);
 }
 
 //送信データの表示
