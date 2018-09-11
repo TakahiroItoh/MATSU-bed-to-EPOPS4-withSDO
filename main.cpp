@@ -39,7 +39,7 @@ CANMessage canmsgTx;
 CAN canPort(P0_13, P0_18);  //CAN name(PinName rd, PinName td)
 
 //プロトタイプ宣言
-//-----------send関数------------
+//------------------send関数-------------------
 //mode Setting
 void sendOPMode(int);       //Operating Mode
 //Control Word
@@ -50,7 +50,9 @@ void sendCtrlQS(int);       //Quick Stop
 void sendCtrlHL(int);       //Halt
 //Velocity Setting
 void sendTgtVel(int,int);   //Target Velocity
-//-------------------------------
+//------------------read関数-------------------
+void readActVel(int);       //Actual Velocity
+//---------------------------------------------
 void printCANmsg(void);     //CAN送信データをPCに表示
 
 int main(){
@@ -81,7 +83,7 @@ int main(){
     wait(0.1);
     //-------------------------------------------
     while(1){
-        //-------------やりたいことを選択--------------
+        //-------------送信コマンドを選択--------------
         if(){
             //目標速度を送信後、Enableコマンド送信
             pc.printf("Send Target Velocity\r\n");
@@ -96,9 +98,14 @@ int main(){
         }
         else if(){
             //quick stopコマンド送信
-            pc.printf("Send Quick Stop | break\r\n");
+            pc.printf("Send Quick Stop\r\nPROGRAM END\r\n");
             sendCtrlQS(node1);
             break;
+        }
+        else if(){
+            //Actual Velocityを尋ねる
+            pc.printf("Read Actual Velocity\r\n", );
+            readActVel(node1);
         }
         //-------------------------------------------
     }
@@ -234,6 +241,10 @@ void sendTgtVel(int nodeID,int rpm){
     pc.printf("Send Enable Command\r\n");
     sendCtrlEN(nodeID);
     wait(0.1);
+}
+
+void readActVel(int nodeID){
+    
 }
 
 //送信データの表示
