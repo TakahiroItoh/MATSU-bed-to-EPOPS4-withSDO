@@ -33,6 +33,7 @@ void sendOPMode(int nodeID){
 #define LED4 P0_26
 
 USBSerial pc;
+char Serialdata;
 BusOut myled(LED1, LED2, LED3, LED4);
 
 CANMessage canmsgTx;
@@ -52,15 +53,22 @@ void sendCtrlHL(int);       //Halt
 void sendTgtVel(int,int);   //Target Velocity
 //------------------read関数-------------------
 void readActVel(int);       //Actual Velocity
-//---------------------------------------------
+//-------------------その他--------------------
 void printCANmsg(void);     //CAN送信データをPCに表示
+void SerialRX(void);         //Serial受信処理
 
 int main(){
+    //Serial
+    pc.baud(9600);  //Baud Rate:9600
+    pc.attach(SerialRX,Serial::RxIrq);
+    //CAN
     canPort.frequency(1000000); //Bit Rate:1MHz
     int node1 = 1;  //CAN node Setting
+    //User Setting
     int rpm = 1000; //Velocity Setting[rpm]
     myled = 0b0001;
     while(pc.readable() == 0);
+    Serialdata = 0;
     pc.printf("KEY DETECTED!!\r\nPROGRAM START\r\n");
     wait(0.5);
     //-------------起動時に必ず送信---------------
@@ -84,30 +92,31 @@ int main(){
     //-------------------------------------------
     while(1){
         //-------------送信コマンドを選択--------------
-        if(){
+        if(Serialdata == ){
             //目標速度を送信後、Enableコマンド送信
             pc.printf("Send Target Velocity\r\n");
             sendTgtVel(node1,rpm);
             myled = 0b1111;
         }
-        else if(){
+        else if(Serialdata == ){
             //Haltコマンド送信
             pc.printf("Send Halt Command\r\n");
             sendCtrlHL(node1);
             myled = 0b0111;
         }
-        else if(){
+        else if(Serialdata ==){
             //quick stopコマンド送信
             pc.printf("Send Quick Stop\r\nPROGRAM END\r\n");
             sendCtrlQS(node1);
             break;
         }
-        else if(){
+        else if(Serialdata ==){
             //Actual Velocityを尋ねる
             pc.printf("Read Actual Velocity\r\n", );
             readActVel(node1);
         }
         //-------------------------------------------
+        Serialdata = 0;
     }
     myled = 0b0000;
 }
@@ -244,7 +253,7 @@ void sendTgtVel(int nodeID,int rpm){
 }
 
 void readActVel(int nodeID){
-    
+
 }
 
 //送信データの表示
@@ -255,4 +264,8 @@ void printCANmsg(void){
         pc.printf("%02x|",canmsgTx.data[i]);
     }
     pc.printf("\r\n");
+}
+
+void SerialRX(void){
+    Serialdata = pc.getc();
 }
