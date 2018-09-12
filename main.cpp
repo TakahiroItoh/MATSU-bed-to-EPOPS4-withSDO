@@ -59,7 +59,7 @@ void SerialRX(void);         //Serial受信処理
 
 int main(){
     //Serial
-    pc.attach(SerialRX,Serial::RxIrq);
+    pc.attach(SerialRX);
     //CAN
     canPort.frequency(1000000); //Bit Rate:1MHz
     int node1 = 1;  //CAN node Setting
@@ -111,7 +111,7 @@ int main(){
         }
         else if(Serialdata == 'v'){
             //Actual Velocityを尋ねる
-            pc.printf("Read Actual Velocity\r\n", );
+            pc.printf("Read Actual Velocity\r\n");
             readActVel(node1);
         }
         //-------------------------------------------
