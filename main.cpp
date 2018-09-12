@@ -59,7 +59,6 @@ void SerialRX(void);         //Serial受信処理
 
 int main(){
     //Serial
-    pc.baud(9600);  //Baud Rate:9600
     pc.attach(SerialRX,Serial::RxIrq);
     //CAN
     canPort.frequency(1000000); //Bit Rate:1MHz
