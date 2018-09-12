@@ -92,25 +92,25 @@ int main(){
     //-------------------------------------------
     while(1){
         //-------------送信コマンドを選択--------------
-        if(Serialdata == ){
+        if(Serialdata == 's'){
             //目標速度を送信後、Enableコマンド送信
             pc.printf("Send Target Velocity\r\n");
             sendTgtVel(node1,rpm);
             myled = 0b1111;
         }
-        else if(Serialdata == ){
+        else if(Serialdata == 'h'){
             //Haltコマンド送信
             pc.printf("Send Halt Command\r\n");
             sendCtrlHL(node1);
             myled = 0b0111;
         }
-        else if(Serialdata ==){
+        else if(Serialdata == 'q'){
             //quick stopコマンド送信
             pc.printf("Send Quick Stop\r\nPROGRAM END\r\n");
             sendCtrlQS(node1);
             break;
         }
-        else if(Serialdata ==){
+        else if(Serialdata == 'v'){
             //Actual Velocityを尋ねる
             pc.printf("Read Actual Velocity\r\n", );
             readActVel(node1);
@@ -261,7 +261,7 @@ void readActVel(int nodeID){
     canmsgTx.data[2] = 0x60;//Index HighByte
     canmsgTx.data[3] = 0x00;//sub-Index
     canPort.write(canmsgTx);
-    
+
 }
 
 //送信データの表示
