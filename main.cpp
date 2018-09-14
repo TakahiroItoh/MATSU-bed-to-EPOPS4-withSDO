@@ -55,7 +55,7 @@ void sendTgtVel(int,int);   //Target Velocity
 void readActVel(int);       //Actual Velocity
 //-------------------その他--------------------
 void printCANmsg(void);     //CAN送信データをPCに表示
-void SerialRX(void);         //Serial受信処理
+void SerialRX(void);        //Serial受信処理
 
 int main(){
     //Serial
@@ -66,7 +66,9 @@ int main(){
     //User Setting
     int rpm = 1000; //Velocity Setting[rpm]
     myled = 0b0001;
-    while(pc.readable() == 0);
+    while(1){
+        if(Serialdata == 's')break;
+    }
     Serialdata = 0;
     pc.printf("KEY DETECTED!!\r\nPROGRAM START\r\n");
     wait(0.5);
@@ -91,7 +93,7 @@ int main(){
     //-------------------------------------------
     while(1){
         //-------------送信コマンドを選択--------------
-        if(Serialdata == 's'){
+        if(Serialdata == 't'){
             //目標速度を送信後、Enableコマンド送信
             pc.printf("Send Target Velocity\r\n");
             sendTgtVel(node1,rpm);
@@ -275,4 +277,5 @@ void printCANmsg(void){
 
 void SerialRX(void){
     Serialdata = pc.getc();
+    pc.printf("%c\r\n",Serialdata);
 }
