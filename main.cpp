@@ -97,6 +97,7 @@ int main(){
     sendCtrlEN(node1);
     myled = 0b0111;
     wait(0.1);
+    pc.printf("Press 't'=TgtVel 'h'=Halt 'q'=END 'v'=ActVel\r\n");
     //-------------------------------------------
     while(1){
         //-------------送信コマンドを選択--------------
@@ -256,11 +257,11 @@ void sendTgtVel(int nodeID,int rpm){
     }
     canPort.write(canmsgTx);//CANでデータ送信
     printCANmsg();          //CAN送信データをPCに表示
-    wait(0.1);
+    wait(0.5);
     //send Enable
     pc.printf("Send Enable Command\r\n");
     sendCtrlEN(nodeID);
-    wait(0.1);
+    wait(0.5);
 }
 
 void readActVel(int nodeID){
