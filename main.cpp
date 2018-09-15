@@ -67,7 +67,14 @@ int main(){
     int rpm = 1000; //Velocity Setting[rpm]
     myled = 0b0001;
     while(1){
-        if(Serialdata == 's')break;
+        if(Serialdata == 's'){
+            Serialdata = 0;
+            break;
+        }
+        myled = 0b0001;
+        wait(0.5);
+        myled = 0b0000;
+        wait(0.5);
     }
     Serialdata = 0;
     pc.printf("KEY DETECTED!!\r\nPROGRAM START\r\n");
@@ -97,27 +104,30 @@ int main(){
             //目標速度を送信後、Enableコマンド送信
             pc.printf("Send Target Velocity\r\n");
             sendTgtVel(node1,rpm);
+            Serialdata = 0;
             myled = 0b1111;
         }
         else if(Serialdata == 'h'){
             //Haltコマンド送信
             pc.printf("Send Halt Command\r\n");
             sendCtrlHL(node1);
+            Serialdata = 0;
             myled = 0b0111;
         }
         else if(Serialdata == 'q'){
             //quick stopコマンド送信
             pc.printf("Send Quick Stop\r\nPROGRAM END\r\n");
             sendCtrlQS(node1);
+            Serialdata = 0;
             break;
         }
         else if(Serialdata == 'v'){
             //Actual Velocityを尋ねる
             pc.printf("Read Actual Velocity\r\n");
             readActVel(node1);
+            Serialdata = 0;
         }
         //-------------------------------------------
-        Serialdata = 0;
     }
     myled = 0b0000;
 }
