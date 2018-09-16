@@ -5,9 +5,12 @@ MATSU-bed<br>
 https://os.mbed.com/teams/MATSU-bed/wiki/MATSU-bed-config
 
 ### このプログラムの指令の流れ<br>
-1.sendOPMode関数でオペレーティングモードをProfile Velocity Modeに変更<br>
-2.sendCtrlRS関数でコントロールワードをリセット<br>
-3.sendCtrlSD関数、sendCtrlEN関数でEPOS4をリセット(Shutdown,Switch on)<br>
-4.sendTgtVel関数で目標回転数を指定<br>
-5.sendCtrlEN関数で回転開始(Enable)<br>
-6.sendCtrlQS関数で回転停止(Quick stop)<br>
+1. 's'でプログラムスタート<br>
+2. Profile Velocity Mode(PVM)に設定される<br>
+3. 送信コマンド選択ループ開始<br>
+    't' : プログラム中に指定された回転速度で回転開始<br>
+    'h' : Halt(一時停止)コマンド<br>
+    'v' : Actual Velocityを尋ねるコマンド<br>
+    'q' : Quick Stop,Shutdownコマンド｜プログラム終了<br>
+    もし動かないとき：PVMの設定がコケてることがあります。<br>
+    'm' : PVMを再設定
