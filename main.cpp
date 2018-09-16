@@ -68,8 +68,9 @@ int main(){
     canPort.attach(CANdataRX,CAN::RxIrq);
     int node1 = 1;  //CAN node Setting
     //User Setting
-    int rpm = 1000; //Velocity Setting[rpm]
+    int rpm = 4000; //Velocity Setting[rpm]
     myled = 0b0001;
+    pc.printf("Press 's' to Start\r\n");
     while(1){
         if(Serialdata == 's'){
             Serialdata = 0;
@@ -102,6 +103,7 @@ int main(){
     myled = 0b0111;
     wait(0.1);
     pc.printf("Press 't'=TgtVel 'h'=Halt 'q'=END 'v'=ActVel\r\n");
+    pc.printf("if EPOS4 dose not work. Press 'm'(set mode once again)\r\n");
     //-------------------------------------------
     while(1){
         //-------------送信コマンドを選択--------------
@@ -123,6 +125,9 @@ int main(){
             //quick stopコマンド送信
             pc.printf("Send Quick Stop\r\nPROGRAM END\r\n");
             sendCtrlQS(node1);
+            wait(0.5);
+            pc.printf("Send Shutdown Command\r\n");
+            sendCtrlSD(node1);
             Serialdata = 0;
             break;
         }
@@ -131,6 +136,26 @@ int main(){
             pc.printf("Read Actual Velocity\r\n");
             readActVel(node1);
             Serialdata = 0;
+        }
+        else if(Serialdata == 'm'){
+            pc.printf("Send Operating Mode\r\n");
+            sendOPMode(node1);
+            myled = 0b0011;
+            wait(0.1);
+            //コントロールワードのリセット
+            pc.printf("Send Reset Command\r\n");
+            sendCtrlRS(node1);
+            wait(0.1);
+            //Shutdown,Enableコマンド送信｜リセット
+            pc.printf("Send Shutdown Command\r\n");
+            sendCtrlSD(node1);
+            wait(0.1);
+            pc.printf("Send SW on & Enable Command\r\n");
+            sendCtrlEN(node1);
+            myled = 0b0111;
+            wait(0.1);
+            Serialdata = 0;
+            myled = 0b0111;
         }
         //-------------------------------------------
     }
