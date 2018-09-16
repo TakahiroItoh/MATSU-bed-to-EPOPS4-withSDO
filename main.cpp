@@ -20,8 +20,8 @@ void sendOPMode(int nodeID){
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
 //-------------------------------------------------------
-    canPort.write(canmsgTx);//CANでデータ送信
     printCANTX();          //CAN送信データをPCに表示
+    canPort.write(canmsgTx);//CANでデータ送信
 }
 */
 #include "mbed.h"
@@ -151,8 +151,8 @@ void sendOPMode(int nodeID){
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
     */
-    canPort.write(canmsgTx);//CANでデータ送信
     printCANTX();          //CAN送信データをPCに表示
+    canPort.write(canmsgTx);//CANでデータ送信
 }
 
 //0x2B-6040-00-0000-//-//
@@ -169,8 +169,8 @@ void sendCtrlRS(int nodeID){
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
     */
-    canPort.write(canmsgTx);//CANでデータ送信
     printCANTX();          //CAN送信データをPCに表示
+    canPort.write(canmsgTx);//CANでデータ送信
 }
 
 //0x2B-6040-00-0006-//-//
@@ -187,8 +187,8 @@ void sendCtrlSD(int nodeID){
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
     */
-    canPort.write(canmsgTx);//CANでデータ送信
     printCANTX();          //CAN送信データをPCに表示
+    canPort.write(canmsgTx);//CANでデータ送信
 }
 
 //0x2B-6040-00-000F-//-//
@@ -205,8 +205,8 @@ void sendCtrlEN(int nodeID){
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
     */
-    canPort.write(canmsgTx);//CANでデータ送信
     printCANTX();          //CAN送信データをPCに表示
+    canPort.write(canmsgTx);//CANでデータ送信
 }
 
 //0x2B-6040-00-000B-//-//
@@ -223,8 +223,8 @@ void sendCtrlQS(int nodeID){
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
     */
-    canPort.write(canmsgTx);//CANでデータ送信
     printCANTX();          //CAN送信データをPCに表示
+    canPort.write(canmsgTx);//CANでデータ送信
 }
 
 //0x2B-6040-00-010F-//-//
@@ -241,8 +241,8 @@ void sendCtrlHL(int nodeID){
     canmsgTx.data[6] = 0x00;//data:(user value)
     canmsgTx.data[7] = 0x00;//data:(user value)
     */
-    canPort.write(canmsgTx);//CANでデータ送信
     printCANTX();          //CAN送信データをPCに表示
+    canPort.write(canmsgTx);//CANでデータ送信
 }
 
 //0x2B-60FF-00-[user data(4Byte)]
@@ -259,8 +259,8 @@ void sendTgtVel(int nodeID,int rpm){
         canmsgTx.data[cnt] = rpm % 256;
         rpm = rpm / 256;
     }
-    canPort.write(canmsgTx);//CANでデータ送信
     printCANTX();          //CAN送信データをPCに表示
+    canPort.write(canmsgTx);//CANでデータ送信
     wait(0.5);
     //send Enable
     pc.printf("Send Enable Command\r\n");
