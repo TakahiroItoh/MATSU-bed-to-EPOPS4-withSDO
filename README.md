@@ -1,5 +1,5 @@
 # MATSU-bed-to-EPOPS4-withSDO
-MATSU-bedでCANopenのSDO Objectを用いてEPOS4の速度制御を実行する
+MATSU-bedでCANopenのSDO Communicationを用いてEPOS4の速度制御を実行する
 
 MATSU-bed<br>
 https://os.mbed.com/teams/MATSU-bed/wiki/MATSU-bed-config
